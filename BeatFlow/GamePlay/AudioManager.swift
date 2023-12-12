@@ -31,5 +31,10 @@ class AudioManager {
             }
         }
     }
+    
+    func stopBackgroundMusic() {
+            audioPlayer?.stop()
+            audioPlayer = nil // Resetta l'istanza dell'AVAudioPlayer per liberare le risorse
+        }
 
 }

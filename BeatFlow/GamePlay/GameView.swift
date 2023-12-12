@@ -6,6 +6,7 @@ class GameManager: ObservableObject {
     @Published var endedGame: Bool = false
     @Published var actualCombo: Int = 0
     @Published var highestCombo: Int = 0
+    @Published var actualHealth: Int = 0
 }
 
 struct GameView: View {
@@ -66,7 +67,7 @@ struct GameView: View {
             }
             
             if gameStarted && gameManager.endedGame{
-                EndGameView()
+                EndGameView(score: $gameManager.score, highestCombo: $gameManager.highestCombo)
             }
         }
         }).navigationBarBackButtonHidden(true)

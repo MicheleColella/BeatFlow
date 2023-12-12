@@ -16,8 +16,8 @@ class Note: SKSpriteNode {
 ///Scena Gameplay
 class GameScene: SKScene {
     ///Target linee
-    var heightA: CGFloat = 50 //Altezza linea 1
-    var heightB: CGFloat = 250 //Altezza linea 2
+    var heightA: CGFloat = 100 //Altezza linea 1
+    var heightB: CGFloat = 300 //Altezza linea 2
     
     ///Timer canzone
     var gameTimer: Timer?
@@ -64,17 +64,20 @@ class GameScene: SKScene {
     
     ///Sistema di vita
     var startLife = 2
-    var actualLife = 0
+    
+    var contStartMusic: Int = 0
 
     
     ///Avvio della scena
     override func didMove(to view: SKView) {
-        actualLife = startLife
+        gameManager?.actualHealth = startLife
         createNotes()
         drawHorizontalLines()
         
+        /*
         startGameTimer()
         AudioManager.shared.playBackgroundMusicWithDelay(delay: startDelay ?? 0, songName: songName ?? "")
+         */
     }
     
     ///Inizio del timer
@@ -89,17 +92,59 @@ class GameScene: SKScene {
     
     ///Mostra la schermata di fine livello
     func showEndGameScreen() {
-        /*
-        let endGameScene = EndGameScene(size: self.size, finalScore: score)
-        self.view?.presentScene(endGameScene)
-        */
         gameManager?.endedGame = true
     }
     
     ///Aggiornamento continuo del punteggio
     override func update(_ currentTime: TimeInterval) {
-        gameManager?.score = score
+        var isFirstNoteAtHeight = false
+            
+            // Verifica solo la prima nota nell'array delle note
+            if let firstNote = notes.first {
+                // Verifica se la prima nota è già stata tagliata o se ha già superato la parte inferiore dello schermo
+                if !firstNote.isCut && firstNote.position.y <= heightB && firstNote.position.y >= heightA { // altezza media 150 come specificato (50 + 250) / 2
+                    isFirstNoteAtHeight = true
+                }
+            }
+            
+            // Se la prima nota è arrivata all'altezza desiderata, avvia la canzone
+            if isFirstNoteAtHeight && contStartMusic == 0{
+                contStartMusic += 1
+                startGameTimer()
+                AudioManager.shared.playBackgroundMusicWithDelay(delay: 0, songName: songName ?? "")
+                 
+                isFirstNoteAtHeight = false
+            }
+        
+        for note in notes {
+            // Verifica se la nota è già stata tagliata o se ha già superato la parte inferiore dello schermo
+            if !note.isCut && note.position.y < 0 {
+                // Imposta la nota come "sbagliata"
+                note.isCut = true
+                // Resetta la combo e sottrai una vita
+                combo = 0
+                gameManager?.actualHealth -= 1
+                gameManager?.actualCombo = combo
+                print("Nota sbagliata - Combo resettata - Vita: \(gameManager?.actualHealth ?? 0)")
+                
+                // Aggiungi altre azioni o effetti per indicare la nota sbagliata
+                
+                // Se la vita è inferiore o uguale a zero, il gioco è fallito
+                if gameManager?.actualHealth ?? 0 <= 0 {
+                    print("Gioco fallito")
+                    gameManager?.endedGame = true
+                    AudioManager.shared.stopBackgroundMusic() // Metti in pausa la canzone
+                }
+                
+                // Rimuovi la nota dalla scena
+                note.removeFromParent()
+            }
+        }
+        
+        gameManager?.score = score // Aggiorna il punteggio
+        gameManager?.highestCombo = highestCombo // Aggiorna la combo massima
     }
+
     
     ///Disegna le linee orizzontali
     func drawHorizontalLines() {
@@ -132,7 +177,7 @@ class GameScene: SKScene {
         lineA.lineWidth = 2 // Modifica lo spessore
         
         lineB.path = pathB
-        lineB.strokeColor = .blue // Modifica il colore
+        lineB.strokeColor = .red // Modifica il colore
         lineB.lineWidth = 2 // Modifica lo spessore
         
         // Aggiungi le linee alla scena
@@ -282,21 +327,23 @@ class GameScene: SKScene {
                                 print("Combo x\(combo) - Score: \(score)")
                                 // Aggiungi suono, effetti o altre azioni per indicare il taglio della nota
                                 
-                                if actualLife < startLife
+                                if gameManager?.actualHealth ?? 0 < startLife
                                 {
-                                    actualLife += 1
+                                    gameManager?.actualHealth += 1
                                 }
 
                             } else {
                                 // Resettare la combo se si sbaglia la nota
                                 combo = 0
-                                actualLife -= 1
+                                gameManager?.actualHealth -= 1
                                 gameManager?.actualCombo = combo
                                 print("Combo reset - Score: \(score)")
                                 // Aggiungi altre azioni o effetti per indicare un taglio errato
                                 
-                                if actualLife <= 0 {
+                                if gameManager?.actualHealth ?? 0 <= 0 {
                                     print("Gioco fallito")
+                                    gameManager?.endedGame = true
+                                    AudioManager.shared.stopBackgroundMusic() // Metti in pausa la canzone
                                 }
                             }
                             

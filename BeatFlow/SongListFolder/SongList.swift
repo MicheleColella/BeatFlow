@@ -10,16 +10,16 @@ import SwiftUI
 struct SongList: View {
     var body: some View {
         NavigationView {
-        VStack{
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Songs List")
-                .font(.largeTitle)
-                .padding(.top, 20)
-                .padding(.horizontal)
+            VStack{
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Songs List")
+                        .font(.largeTitle)
+                        .padding(.top, 20)
+                        .padding(.horizontal)
+                    
+                    
+                }
                 
-            
-        }
-            
                 ScrollView {
                     
                     VStack(spacing: 20) {
