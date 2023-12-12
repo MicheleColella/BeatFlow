@@ -57,13 +57,19 @@ class GameScene: SKScene {
     let arrowTextureLeft = SKTexture(imageNamed: "arrow_left")
     let arrowTextureRight = SKTexture(imageNamed: "arrow_right")
     
+    ///Sistema di combo
     var combo: Int = 0
     var highestCombo: Int = 0
     let baseScoreForHit: Int = 2
+    
+    ///Sistema di vita
+    var startLife = 2
+    var actualLife = 0
 
     
     ///Avvio della scena
     override func didMove(to view: SKView) {
+        actualLife = startLife
         createNotes()
         drawHorizontalLines()
         
@@ -275,14 +281,23 @@ class GameScene: SKScene {
                                 gameManager?.actualCombo = combo
                                 print("Combo x\(combo) - Score: \(score)")
                                 // Aggiungi suono, effetti o altre azioni per indicare il taglio della nota
+                                
+                                if actualLife < startLife
+                                {
+                                    actualLife += 1
+                                }
 
                             } else {
                                 // Resettare la combo se si sbaglia la nota
                                 combo = 0
-                                score -= 1 // Riduci il punteggio per un taglio sbagliato
+                                actualLife -= 1
                                 gameManager?.actualCombo = combo
                                 print("Combo reset - Score: \(score)")
                                 // Aggiungi altre azioni o effetti per indicare un taglio errato
+                                
+                                if actualLife <= 0 {
+                                    print("Gioco fallito")
+                                }
                             }
                             
                             // Aggiorna la combo massima se la combo attuale supera la precedente massima
