@@ -4,6 +4,8 @@ import SpriteKit
 class GameManager: ObservableObject {
     @Published var score: Int = 0
     @Published var endedGame: Bool = false
+    @Published var actualCombo: Int = 0
+    @Published var highestCombo: Int = 0
 }
 
 struct GameView: View {
@@ -39,6 +41,9 @@ struct GameView: View {
     
     
     var body: some View {
+        NavigationView(content: {
+             
+        
         ZStack {
             if !gameStarted && !gameManager.endedGame{
                 StartButtonView(gameStarted: $gameStarted)
@@ -54,12 +59,17 @@ struct GameView: View {
                     .foregroundColor(.white)
                     .font(.largeTitle)
                     .offset(x: -150, y: -350)
+                Text("\(gameManager.actualCombo)")
+                    .foregroundColor(.white)
+                    .font(.largeTitle)
+                    .offset(x: 150, y: -350)
             }
             
             if gameStarted && gameManager.endedGame{
                 EndGameView()
             }
         }
+        }).navigationBarBackButtonHidden(true)
     }
 }
 

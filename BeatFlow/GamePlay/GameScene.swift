@@ -272,6 +272,7 @@ class GameScene: SKScene {
                                 // Incrementa la combo e aggiorna il punteggio in base alla combo
                                 combo += 1
                                 score += baseScoreForHit + combo
+                                gameManager?.actualCombo = combo
                                 print("Combo x\(combo) - Score: \(score)")
                                 // Aggiungi suono, effetti o altre azioni per indicare il taglio della nota
 
@@ -279,6 +280,7 @@ class GameScene: SKScene {
                                 // Resettare la combo se si sbaglia la nota
                                 combo = 0
                                 score -= 1 // Riduci il punteggio per un taglio sbagliato
+                                gameManager?.actualCombo = combo
                                 print("Combo reset - Score: \(score)")
                                 // Aggiungi altre azioni o effetti per indicare un taglio errato
                             }
@@ -289,6 +291,7 @@ class GameScene: SKScene {
                             }
 
                             // Aggiungi un print per visualizzare la combo massima
+                            gameManager?.highestCombo = highestCombo
                             print("Highest Combo: \(highestCombo)")
 
                             
