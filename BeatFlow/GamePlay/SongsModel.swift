@@ -23,14 +23,23 @@ struct SongValue{
 
 class SongSelection{
     var song: [SongValue] = [
-        SongValue(name: "Jingle", songName: "JingleBeat", gameDuration: 100, bpm: 120.0, 
-                  columnSequence1: [1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1],
-                  columnSequence2: [0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0],
-                  columnSequence3: [0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0],
-                  cutDirections1: [.leftToRight, .rightToLeft, .topToBottom, .rightToLeft, .leftToRight, .leftToRight, .leftToRight, .rightToLeft, .leftToRight, .bottomToTop, .bottomToTop, .topToBottom, .bottomToTop],
-                  cutDirections2: [.leftToRight, .rightToLeft, .topToBottom, .rightToLeft, .leftToRight, .leftToRight, .leftToRight, .rightToLeft, .leftToRight, .bottomToTop, .bottomToTop, .topToBottom, .bottomToTop],
-                  cutDirections3: [.leftToRight, .rightToLeft, .topToBottom, .rightToLeft, .leftToRight, .leftToRight, .leftToRight, .rightToLeft, .leftToRight, .bottomToTop, .bottomToTop, .topToBottom, .bottomToTop],
+        SongValue(name: "Jingle", songName: "JingleBeat", gameDuration: 10, bpm: 120.0,
+                  columnSequence1: [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1],
+                  columnSequence2: [0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0],
+                  columnSequence3: [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+                  cutDirections1: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up],
+                  cutDirections2: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up],
+                  cutDirections3: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up],
                   startDelay: 1.9
+                 ),
+        SongValue(name: "Thunder", songName: "Thunder", gameDuration: 180, bpm: 84.0,
+                  columnSequence1: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  columnSequence2: [0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  columnSequence3: [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  cutDirections1: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left],
+                  cutDirections2: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left],
+                  cutDirections3: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left],
+                  startDelay: 1.0
                  )
     ]
 }

@@ -1,17 +1,18 @@
 import SwiftUI
 import SpriteKit
 
-class GameScore: ObservableObject {
+class GameManager: ObservableObject {
     @Published var score: Int = 0
+    @Published var endedGame: Bool = false
 }
 
 struct GameView: View {
-    var songInt = 0
+    var songInt = 1
     
     var songSelection = SongSelection()
      
     @State public var gameStarted = false // Stato per gestire l'avvio del gioco
-    @StateObject private var gameScore = GameScore() // Oggetto osservabile per il punteggio del gioco
+    @StateObject private var gameManager = GameManager() // Oggetto osservabile per il punteggio del gioco
     
     private var screenWidth: CGFloat { UIScreen.main.bounds.size.width }
     private var screenHeight: CGFloat { UIScreen.main.bounds.size.height }
@@ -20,7 +21,7 @@ struct GameView: View {
         let scene = GameScene()
         scene.size = CGSize(width: screenWidth, height: screenHeight)
         scene.scaleMode = .fill
-        scene.gameScore = gameScore
+        scene.gameManager = gameManager
         
         scene.startDelay = songSelection.song[songInt].startDelay
         scene.songName = songSelection.song[songInt].songName
@@ -39,20 +40,24 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
-            if !gameStarted {
+            if !gameStarted && !gameManager.endedGame{
                 StartButtonView(gameStarted: $gameStarted)
             }
             
-            if gameStarted {
+            if gameStarted && !gameManager.endedGame{
                 SpriteView(scene: self.arcadeGameScene)
                     .frame(width: screenWidth, height: screenHeight)
                     .statusBar(hidden: true)
                     .ignoresSafeArea()
-                    .environmentObject(gameScore)
-                Text("\(gameScore.score)") // Visualizza lo score
+                    .environmentObject(gameManager)
+                Text("\(gameManager.score)") // Visualizza lo score
                     .foregroundColor(.white)
                     .font(.largeTitle)
                     .offset(x: -150, y: -350)
+            }
+            
+            if gameStarted && gameManager.endedGame{
+                EndGameView()
             }
         }
     }

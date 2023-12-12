@@ -3,7 +3,7 @@ import SwiftUI
 
 ///Dichiarazione valori delle frecce
 enum CutDirection {
-    case any, leftToRight, rightToLeft, topToBottom, bottomToTop
+    case any, right, left, down, up
 }
 
 ///Dichiarazione della nota come oggetto
@@ -28,7 +28,7 @@ class GameScene: SKScene {
     var scoreLabel: SKLabelNode!
     
     ///Punteggio
-    var gameScore: GameScore?
+    var gameManager: GameManager?
     public var score: Int = 0
     
     ///Array note
@@ -57,6 +57,11 @@ class GameScene: SKScene {
     let arrowTextureLeft = SKTexture(imageNamed: "arrow_left")
     let arrowTextureRight = SKTexture(imageNamed: "arrow_right")
     
+    var combo: Int = 0
+    var highestCombo: Int = 0
+    let baseScoreForHit: Int = 2
+
+    
     ///Avvio della scena
     override func didMove(to view: SKView) {
         createNotes()
@@ -78,13 +83,16 @@ class GameScene: SKScene {
     
     ///Mostra la schermata di fine livello
     func showEndGameScreen() {
+        /*
         let endGameScene = EndGameScene(size: self.size, finalScore: score)
         self.view?.presentScene(endGameScene)
+        */
+        gameManager?.endedGame = true
     }
     
     ///Aggiornamento continuo del punteggio
     override func update(_ currentTime: TimeInterval) {
-        gameScore?.score = score
+        gameManager?.score = score
     }
     
     ///Disegna le linee orizzontali
@@ -128,11 +136,11 @@ class GameScene: SKScene {
     
     ///Creazione delle note
     func createNotes() {
-        let numberOfColumns = columnSequence1?.count
+        let numberOfColumns1 = columnSequence1?.count
         let yOffsetOffset: CGFloat = 1000
         
         //Piazzamento delle note nella prima colonna
-        for i in 0..<(numberOfColumns ?? 0) {
+        for i in 0..<(numberOfColumns1 ?? 0) {
             let column = columnSequence1?[i]
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
@@ -147,12 +155,12 @@ class GameScene: SKScene {
                 
                 notes.append(note)
                 addChild(note)
-                
-                print(xPosition)}
+            }
         }
         
         //Piazzamento delle note nella seconda colonna
-        for i in 0..<(numberOfColumns ?? 0) {
+        let numberOfColumns2 = columnSequence2?.count
+        for i in 0..<(numberOfColumns2 ?? 0) {
             let column = columnSequence2?[i]
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
@@ -167,12 +175,12 @@ class GameScene: SKScene {
                 
                 notes.append(note)
                 addChild(note)
-                
-                print(xPosition)}
+            }
         }
         
         //Piazzamento delle note nella terza colonna
-        for i in 0..<(numberOfColumns ?? 0) {
+        let numberOfColumns3 = columnSequence3?.count
+        for i in 0..<(numberOfColumns3 ?? 0) {
             let column = columnSequence3?[i]
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
@@ -187,9 +195,18 @@ class GameScene: SKScene {
                 
                 notes.append(note)
                 addChild(note)
-                
-                print(xPosition)}
+            }
         }
+        
+        print("Note1")
+        print(numberOfColumns1 ?? 0)
+        print(cutDirections1?.count ?? 0)
+        print("Note2")
+        print(numberOfColumns2 ?? 0)
+        print(cutDirections2?.count ?? 0)
+        print("Note3")
+        print(numberOfColumns3 ?? 0)
+        print(cutDirections3?.count ?? 0)
         
         // Imposta le texture delle frecce sulla nota attuale
         setArrowTexturesForNotes()
@@ -200,13 +217,13 @@ class GameScene: SKScene {
     func setArrowTexturesForNotes() {
         for (_, note) in notes.enumerated() {
             switch note.cutDirection {
-            case .topToBottom:
+            case .down:
                 note.texture = arrowTextureDown
-            case .bottomToTop:
+            case .up:
                 note.texture = arrowTextureUp
-            case .leftToRight:
+            case .right:
                 note.texture = arrowTextureLeft
-            case .rightToLeft:
+            case .left:
                 note.texture = arrowTextureRight
             default:
                 note.texture = note.cubeTexture // Se non c'è una direzione specifica, ripristina la texture del cubo
@@ -250,18 +267,30 @@ class GameScene: SKScene {
                             let difference = angleDifference(angle1: touchAngle, angle2: noteDirection)
                             let tolerance: CGFloat = CGFloat.pi / 6 // 30 gradi di tolleranza
                             
+                            // Dentro la condizione per un taglio corretto della nota
                             if difference < tolerance {
-                                score += 1
-                                print(score)
+                                // Incrementa la combo e aggiorna il punteggio in base alla combo
+                                combo += 1
+                                score += baseScoreForHit + combo
+                                print("Combo x\(combo) - Score: \(score)")
                                 // Aggiungi suono, effetti o altre azioni per indicare il taglio della nota
-                                // Aggiorna il punteggio, ecc.
-                                
-                                
+
                             } else {
-                                score -= 1
-                                print(score)
+                                // Resettare la combo se si sbaglia la nota
+                                combo = 0
+                                score -= 1 // Riduci il punteggio per un taglio sbagliato
+                                print("Combo reset - Score: \(score)")
                                 // Aggiungi altre azioni o effetti per indicare un taglio errato
                             }
+                            
+                            // Aggiorna la combo massima se la combo attuale supera la precedente massima
+                            if combo > highestCombo {
+                                highestCombo = combo
+                            }
+
+                            // Aggiungi un print per visualizzare la combo massima
+                            print("Highest Combo: \(highestCombo)")
+
                             
                             note.isCut = true
                             note.removeFromParent()
@@ -280,13 +309,13 @@ class GameScene: SKScene {
     
     func direction(for cutDirection: CutDirection) -> CGFloat {
         switch cutDirection {
-        case .leftToRight:
+        case .right:
             return CGFloat.pi // Direzione da sinistra a destra, corrispondente a 180 gradi o pi radianti
-        case .rightToLeft:
+        case .left:
             return 0 // Direzione da destra a sinistra, corrispondente a 0 gradi o 0 radianti
-        case .topToBottom:
+        case .down:
             return -CGFloat.pi / 2 // Direzione dall'alto verso il basso, corrispondente a -90 gradi o -pi/2 radianti
-        case .bottomToTop:
+        case .up:
             return CGFloat.pi / 2 // Direzione dal basso verso l'alto, corrispondente a 90 gradi o pi/2 radianti
         case .any:
             return 0 // Se non c'è una direzione specifica, si può impostare un valore predefinito (in questo caso, 0)
@@ -305,83 +334,4 @@ class GameScene: SKScene {
         return abs(difference)
     }
     ///--------------------------- FINE LOGICA DEL TAGLIO -----------------------------------
-    
-    ///Mostra il pulsante finale
-    func showEndGameButton() {
-        // Crea il pulsante con un'immagine o una forma
-        endGameButton = SKSpriteNode(imageNamed: "nome_dell_immagine") // Sostituisci "nome_dell_immagine" con il nome della tua immagine per il pulsante
-        
-        // Imposta la posizione del pulsante sulla scena
-        endGameButton?.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        
-        // Aggiungi il pulsante alla scena
-        if let button = endGameButton {
-            addChild(button)
-        }
-        
-        // Aggiungi un azione al tocco del pulsante
-        endGameButton?.isUserInteractionEnabled = true
-        endGameButton?.name = "EndGameButton"
-    }
-    
-    // Funzione chiamata quando tutte le note sono finite
-    func allNotesFinished() {
-        // Fai comparire il pulsante quando tutte le note sono state rimosse dalla scena
-        showEndGameButton()
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Controlla se l'utente tocca il pulsante di fine gioco
-        for touch in touches {
-            let location = touch.location(in: self)
-            if let button = endGameButton, button.contains(location) {
-                print("Torna al menu") // Azione desiderata quando si tocca il pulsante
-            }
-        }
-    }
-}
-
-
-///Classe del pulsante finale
-class EndGameScene: SKScene {
-    let finalScore: Int
-    
-    init(size: CGSize, finalScore: Int) {
-        self.finalScore = finalScore
-        super.init(size: size)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func didMove(to view: SKView) {
-        // Crea la schermata di fine gioco con lo score ottenuto e un pulsante "Exit to Menu"
-        createEndGameScreen()
-    }
-    
-    func createEndGameScreen() {
-        //Schermata di fine gioco
-        let scoreLabel = SKLabelNode(text: "Final Score: \(finalScore)")
-        scoreLabel.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        addChild(scoreLabel)
-        
-        let exitButton = SKLabelNode(text: "Exit to Menu")
-        exitButton.name = "ExitButton"
-        exitButton.position = CGPoint(x: size.width / 2, y: size.height / 2 - 50)
-        addChild(exitButton)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let touchLocation = touch.location(in: self)
-        
-        if let nodeTouched = nodes(at: touchLocation).first {
-            if nodeTouched.name == "ExitButton" {
-                // Assicurati di avere questa riga per eseguire il print
-                print("Uscita dal gioco")
-                // Includi altre azioni che desideri eseguire quando il pulsante "Exit to Menu" viene premuto
-            }
-        }
-    }
 }
