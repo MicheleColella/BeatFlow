@@ -64,7 +64,7 @@ class GameScene: SKScene {
     let baseScoreForHit: Int = 2
     
     ///Sistema di vita
-    var startLife = 2
+    var startLife = 10
     
     var contStartMusic: Int = 0
 
@@ -86,8 +86,8 @@ class GameScene: SKScene {
     }
     
     func createProgressBar() -> SKShapeNode {
-        let progressBarWidth: CGFloat = 300 // Larghezza della barra di avanzamento
-        let progressBarHeight: CGFloat = 20 // Altezza della barra di avanzamento
+        let progressBarWidth: CGFloat = 350 // Larghezza della barra di avanzamento
+        let progressBarHeight: CGFloat = 50 // Altezza della barra di avanzamento
         
         // Calcola la posizione X desiderata per spostare la barra più a destra nella scena
         let progressBarXPosition = self.size.width - 20 - progressBarWidth / 2
@@ -100,9 +100,6 @@ class GameScene: SKScene {
         
         return progressBar
     }
-
-
-
         
         // Aggiorna la barra di avanzamento in base al tempo rimanente
     func updateProgressBar() {
@@ -114,9 +111,9 @@ class GameScene: SKScene {
         let progress = CGFloat(1 - (timeRemaining / gameDuration)) // Calcola il progresso come percentuale completata
 
         if let progressBar = progressBar {
-            let progressBarWidth: CGFloat = 300 // Larghezza della barra di avanzamento
+            let progressBarWidth: CGFloat = 350 // Larghezza della barra di avanzamento
 
-            let progressBarHeight: CGFloat = 20 // Altezza della barra di avanzamento
+            let progressBarHeight: CGFloat = 50 // Altezza della barra di avanzamento
             
             // Calcola la posizione X desiderata per spostare la barra più a sinistra nella scena
             let progressBarXPosition = 20 + progressBarWidth / 2
@@ -125,13 +122,13 @@ class GameScene: SKScene {
                 progressBarLeft.removeFromParent()
             }
 
-            let red = CGFloat((0x2F >> 16) & 0xFF) / 255.0
-            let green = CGFloat((0xA3 >> 8) & 0xFF) / 255.0
-            let blue = CGFloat(0xC4 & 0xFF) / 255.0
+            let red = CGFloat((0x2F & 0xFF)) / 255.0
+            let green = CGFloat((0xA3 & 0xFF)) / 255.0
+            let blue = CGFloat((0xC4 & 0xFF)) / 255.0
 
             let customColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
 
-            let progressBarLeft = SKShapeNode(rectOf: CGSize(width: progressBarWidth * progress, height: progressBarHeight))
+            let progressBarLeft = SKShapeNode(rectOf: CGSize(width: progressBarWidth * progress, height: progressBarHeight), cornerRadius: 10)
             progressBarLeft.fillColor = customColor // Colore di riempimento della parte sinistra della barra
             progressBarLeft.strokeColor = .clear // Nessun contorno
             progressBarLeft.position = CGPoint(x: progressBarXPosition - progressBarWidth / 2 + progressBarWidth * progress / 2, y: 50)

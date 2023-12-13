@@ -61,11 +61,11 @@ struct GameView: View {
                         Text("\(gameManager.score)") // Visualizza lo score
                             .foregroundColor(.white)
                             .font(.largeTitle)
-                            .offset(x: -150, y: -350)
+                            .offset(x: 0, y: -250)
                         Text("×\(gameManager.actualCombo)")
                             .foregroundColor(.white)
                             .font(.largeTitle)
-                            .offset(x: 150, y: -350)
+                            .offset(x: 0, y: -200)
                     }
                 }
                 
