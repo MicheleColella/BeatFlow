@@ -23,6 +23,7 @@
 		8B676FA52B236B5B00646BEA /* StartButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B676FA42B236B5B00646BEA /* StartButtonView.swift */; };
 		8B676FA72B248C3A00646BEA /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B676FA62B248C3A00646BEA /* AudioManager.swift */; };
 		8B676FA92B248DFF00646BEA /* JingleBeat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B676FA82B248DFF00646BEA /* JingleBeat.mp3 */; };
+		F36846612B2879C100D51DAB /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36846602B2879C100D51DAB /* LeaderboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		8B676FA42B236B5B00646BEA /* StartButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonView.swift; sourceTree = "<group>"; };
 		8B676FA62B248C3A00646BEA /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		8B676FA82B248DFF00646BEA /* JingleBeat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = JingleBeat.mp3; sourceTree = "<group>"; };
+		F36846602B2879C100D51DAB /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				8B676F752B21DFD300646BEA /* BeatFlowApp.swift */,
+				F36846622B2879CC00D51DAB /* Leaderboard */,
 				8B676F772B21DFD300646BEA /* ContentView.swift */,
 				8B221ACB2B2878BB00CB9402 /* SongListFolder */,
 				8B676F9F2B21E00F00646BEA /* GamePlay */,
@@ -176,6 +179,14 @@
 				7AB9270E2B285111001CCB97 /* Thunder.mp3 */,
 			);
 			path = Songs;
+			sourceTree = "<group>";
+		};
+		F36846622B2879CC00D51DAB /* Leaderboard */ = {
+			isa = PBXGroup;
+			children = (
+				F36846602B2879C100D51DAB /* LeaderboardView.swift */,
+			);
+			path = Leaderboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F36846612B2879C100D51DAB /* LeaderboardView.swift in Sources */,
 				8B221AC82B278FF100CB9402 /* EndGameView.swift in Sources */,
 				8B676FA72B248C3A00646BEA /* AudioManager.swift in Sources */,
 				8B676F782B21DFD300646BEA /* ContentView.swift in Sources */,
