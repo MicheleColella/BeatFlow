@@ -140,7 +140,7 @@ struct SongList: View {
                 }.offset(y:100)
             ).ignoresSafeArea()
             
-        }    }
+        }.navigationBarBackButtonHidden(true)    }
 }
 
 #Preview {

@@ -30,7 +30,7 @@ class SongSelection{
                   cutDirections2: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up],
                   cutDirections3: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up]
                  ),
-        SongValue(name: "Thunder", songName: "Thunder", gameDuration: 180, bpm: 84.0,
+        SongValue(name: "Thunder", songName: "Thunder", gameDuration: 178, bpm: 84.0,
                   columnSequence1: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   columnSequence2: [0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   columnSequence3: [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

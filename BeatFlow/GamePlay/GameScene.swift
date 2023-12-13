@@ -71,14 +71,43 @@ class GameScene: SKScene {
     
     ///Avvio della scena
     override func didMove(to view: SKView) {
+        // Calcola l'altezza totale del rettangolo in base a heightA e heightB
+        let totalHeight = heightB - heightA
+
+        // Calcola l'altezza del rettangolo utilizzando totalHeight
+        let rectangleHeight = totalHeight // Puoi anche regolare questa altezza se necessario
+
+        // Crea il rettangolo
+        let rectangle = SKShapeNode(rectOf: CGSize(width: 394, height: rectangleHeight))
+        rectangle.fillColor = .clear
+        rectangle.strokeColor = .clear
+
+        // Calcola la posizione Y del centro del rettangolo
+        let centerY = (heightA + heightB) / 2
+
+        // Imposta la posizione del rettangolo in base al centro Y
+        rectangle.position = CGPoint(x: self.size.width / 2, y: centerY)
+
+        // Crea il nodo sfocatura per il rettangolo
+        let blur = SKSpriteNode(color: .white, size: CGSize(width: 394, height: rectangleHeight))
+        blur.alpha = 0.17
+        blur.position = CGPoint(x: rectangle.frame.width / 2, y: centerY)
+        blur.addChild(rectangle)
+
+        // Aggiungi il rettangolo alla scena
+        addChild(blur)
+
+
+        
         gameManager?.actualHealth = startLife
         createNotes()
-        drawHorizontalLines()
-        
         
         let background = SKSpriteNode(imageNamed: "back") // Sostituisci "NomeImmagineConGradiente" con il nome effettivo del tuo file di immagine
                 background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
                 background.zPosition = -1 // Assicurati che lo sfondo sia dietro gli altri nodi
+        let scaleFactor: CGFloat = 1.1 // Incremento leggero della scala, puoi regolare questo valore come desideri
+        background.setScale(scaleFactor) // Imposta la scala del background
+
                 addChild(background)
          
         progressBar = createProgressBar()
@@ -86,8 +115,8 @@ class GameScene: SKScene {
     }
     
     func createProgressBar() -> SKShapeNode {
-        let progressBarWidth: CGFloat = 350 // Larghezza della barra di avanzamento
-        let progressBarHeight: CGFloat = 50 // Altezza della barra di avanzamento
+        let progressBarWidth: CGFloat = 400 // Larghezza della barra di avanzamento
+        let progressBarHeight: CGFloat = 38 // Altezza della barra di avanzamento
         
         // Calcola la posizione X desiderata per spostare la barra più a destra nella scena
         let progressBarXPosition = self.size.width - 20 - progressBarWidth / 2
@@ -96,11 +125,12 @@ class GameScene: SKScene {
         progressBar.fillColor = .clear // Imposta il colore di riempimento a trasparente
         progressBar.strokeColor = .clear // Colore del bordo della barra
         progressBar.lineWidth = 2 // Spessore del bordo
-        progressBar.position = CGPoint(x: progressBarXPosition-200, y: 700) // Posiziona la barra sulla scena
+        progressBar.position = CGPoint(x: progressBarXPosition-170, y: 716) // Posiziona la barra sulla scena
         
         return progressBar
     }
-        
+
+
         // Aggiorna la barra di avanzamento in base al tempo rimanente
     func updateProgressBar() {
         guard let gameTimer = gameTimer, let gameDuration = gameDuration else {
@@ -111,9 +141,9 @@ class GameScene: SKScene {
         let progress = CGFloat(1 - (timeRemaining / gameDuration)) // Calcola il progresso come percentuale completata
 
         if let progressBar = progressBar {
-            let progressBarWidth: CGFloat = 350 // Larghezza della barra di avanzamento
+            let progressBarWidth: CGFloat = 343 // Larghezza della barra di avanzamento
 
-            let progressBarHeight: CGFloat = 50 // Altezza della barra di avanzamento
+            let progressBarHeight: CGFloat = 38 // Altezza della barra di avanzamento
             
             // Calcola la posizione X desiderata per spostare la barra più a sinistra nella scena
             let progressBarXPosition = 20 + progressBarWidth / 2
@@ -149,6 +179,7 @@ class GameScene: SKScene {
     
     ///Quando il timer finisce avvia la funzione all'interno
     @objc func endGame() {
+        AudioManager.shared.stopBackgroundMusic()
         showEndGameScreen()
     }
     
@@ -209,45 +240,6 @@ class GameScene: SKScene {
         updateProgressBar()
     }
 
-    
-    ///Disegna le linee orizzontali
-    func drawHorizontalLines() {
-        let lineA = SKShapeNode()
-        let lineB = SKShapeNode()
-        
-        let pathA = CGMutablePath()
-        let pathB = CGMutablePath()
-        
-        let startX: CGFloat = -500
-        let endX: CGFloat = 500
-        
-        // Crea i punti di inizio e fine per le due linee
-        let startPointA = CGPoint(x: startX, y: heightA)
-        let endPointA = CGPoint(x: endX, y: heightA)
-        
-        let startPointB = CGPoint(x: startX, y: heightB)
-        let endPointB = CGPoint(x: endX, y: heightB)
-        
-        // Crea il percorso delle due linee
-        pathA.move(to: startPointA)
-        pathA.addLine(to: endPointA)
-        
-        pathB.move(to: startPointB)
-        pathB.addLine(to: endPointB)
-        
-        // Imposta le proprietà delle linee
-        lineA.path = pathA
-        lineA.strokeColor = .red // Modifica il colore
-        lineA.lineWidth = 2 // Modifica lo spessore
-        
-        lineB.path = pathB
-        lineB.strokeColor = .red // Modifica il colore
-        lineB.lineWidth = 2 // Modifica lo spessore
-        
-        // Aggiungi le linee alla scena
-        addChild(lineA)
-        addChild(lineB)
-    }
     
     ///Creazione delle note
     func createNotes() {
