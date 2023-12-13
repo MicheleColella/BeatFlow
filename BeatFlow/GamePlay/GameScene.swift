@@ -15,6 +15,7 @@ class Note: SKSpriteNode {
 
 ///Scena Gameplay
 class GameScene: SKScene {
+    var progressBar: SKShapeNode?
     ///Target linee
     var heightA: CGFloat = 100 //Altezza linea 1
     var heightB: CGFloat = 300 //Altezza linea 2
@@ -74,11 +75,75 @@ class GameScene: SKScene {
         createNotes()
         drawHorizontalLines()
         
-        /*
-        startGameTimer()
-        AudioManager.shared.playBackgroundMusicWithDelay(delay: startDelay ?? 0, songName: songName ?? "")
-         */
+        
+        let background = SKSpriteNode(imageNamed: "back") // Sostituisci "NomeImmagineConGradiente" con il nome effettivo del tuo file di immagine
+                background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+                background.zPosition = -1 // Assicurati che lo sfondo sia dietro gli altri nodi
+                addChild(background)
+         
+        progressBar = createProgressBar()
+                addChild(progressBar!)
     }
+    
+    func createProgressBar() -> SKShapeNode {
+        let progressBarWidth: CGFloat = 300 // Larghezza della barra di avanzamento
+        let progressBarHeight: CGFloat = 20 // Altezza della barra di avanzamento
+        
+        // Calcola la posizione X desiderata per spostare la barra più a destra nella scena
+        let progressBarXPosition = self.size.width - 20 - progressBarWidth / 2
+        
+        let progressBar = SKShapeNode(rectOf: CGSize(width: progressBarWidth, height: progressBarHeight)) // Utilizza un arrotondamento per i bordi
+        progressBar.fillColor = .clear // Imposta il colore di riempimento a trasparente
+        progressBar.strokeColor = .clear // Colore del bordo della barra
+        progressBar.lineWidth = 2 // Spessore del bordo
+        progressBar.position = CGPoint(x: progressBarXPosition-200, y: 700) // Posiziona la barra sulla scena
+        
+        return progressBar
+    }
+
+
+
+        
+        // Aggiorna la barra di avanzamento in base al tempo rimanente
+    func updateProgressBar() {
+        guard let gameTimer = gameTimer, let gameDuration = gameDuration else {
+            return
+        }
+
+        let timeRemaining = gameTimer.fireDate.timeIntervalSinceNow
+        let progress = CGFloat(1 - (timeRemaining / gameDuration)) // Calcola il progresso come percentuale completata
+
+        if let progressBar = progressBar {
+            let progressBarWidth: CGFloat = 300 // Larghezza della barra di avanzamento
+
+            let progressBarHeight: CGFloat = 20 // Altezza della barra di avanzamento
+            
+            // Calcola la posizione X desiderata per spostare la barra più a sinistra nella scena
+            let progressBarXPosition = 20 + progressBarWidth / 2
+
+            if let progressBarLeft = progressBar.childNode(withName: "progressBarLeft") as? SKShapeNode {
+                progressBarLeft.removeFromParent()
+            }
+
+            let red = CGFloat((0x2F >> 16) & 0xFF) / 255.0
+            let green = CGFloat((0xA3 >> 8) & 0xFF) / 255.0
+            let blue = CGFloat(0xC4 & 0xFF) / 255.0
+
+            let customColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+
+            let progressBarLeft = SKShapeNode(rectOf: CGSize(width: progressBarWidth * progress, height: progressBarHeight))
+            progressBarLeft.fillColor = customColor // Colore di riempimento della parte sinistra della barra
+            progressBarLeft.strokeColor = .clear // Nessun contorno
+            progressBarLeft.position = CGPoint(x: progressBarXPosition - progressBarWidth / 2 + progressBarWidth * progress / 2, y: 50)
+
+            progressBarLeft.name = "progressBarLeft"
+            progressBar.addChild(progressBarLeft)
+        }
+    }
+
+
+
+
     
     ///Inizio del timer
     func startGameTimer() {
@@ -111,7 +176,7 @@ class GameScene: SKScene {
             if isFirstNoteAtHeight && contStartMusic == 0{
                 contStartMusic += 1
                 startGameTimer()
-                AudioManager.shared.playBackgroundMusicWithDelay(delay: 0, songName: songName ?? "")
+                AudioManager.shared.playBackgroundMusicWithDelay(songName: songName ?? "")
                  
                 isFirstNoteAtHeight = false
             }
@@ -143,6 +208,8 @@ class GameScene: SKScene {
         
         gameManager?.score = score // Aggiorna il punteggio
         gameManager?.highestCombo = highestCombo // Aggiorna la combo massima
+        
+        updateProgressBar()
     }
 
     

@@ -5,7 +5,7 @@ class AudioManager {
     
     var audioPlayer: AVAudioPlayer?
     
-    func playBackgroundMusicWithDelay(delay: TimeInterval, songName: String) {
+    func playBackgroundMusicWithDelay(songName: String) {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             
@@ -22,7 +22,7 @@ class AudioManager {
                 self.audioPlayer?.prepareToPlay()
                 
                 // Riproduci l'audio sul thread principale
-                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
                     self.audioPlayer?.numberOfLoops = -1
                     self.audioPlayer?.play()
                 }
