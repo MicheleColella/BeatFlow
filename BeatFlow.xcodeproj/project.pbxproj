@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7AB9270D2B284F8B001CCB97 /* SongList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB9270C2B284F8B001CCB97 /* SongList.swift */; };
-		7AB9270F2B285111001CCB97 /* Thunder.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7AB9270E2B285111001CCB97 /* Thunder.mp3 */; };
 		8B221AC62B2630F400CB9402 /* SongsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B221AC52B2630F400CB9402 /* SongsModel.swift */; };
 		8B221AC82B278FF100CB9402 /* EndGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B221AC72B278FF100CB9402 /* EndGameView.swift */; };
 		8B676F762B21DFD300646BEA /* BeatFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B676F752B21DFD300646BEA /* BeatFlowApp.swift */; };
@@ -45,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		7AB9270C2B284F8B001CCB97 /* SongList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongList.swift; sourceTree = "<group>"; };
-		7AB9270E2B285111001CCB97 /* Thunder.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Thunder.mp3; sourceTree = "<group>"; };
 		8B221AC52B2630F400CB9402 /* SongsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsModel.swift; sourceTree = "<group>"; };
 		8B221AC72B278FF100CB9402 /* EndGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameView.swift; sourceTree = "<group>"; };
 		8B676F722B21DFD300646BEA /* BeatFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeatFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				8B676FA82B248DFF00646BEA /* JingleBeat.mp3 */,
-				7AB9270E2B285111001CCB97 /* Thunder.mp3 */,
 			);
 			path = Songs;
 			sourceTree = "<group>";
@@ -295,7 +292,6 @@
 			files = (
 				8B676F7D2B21DFD500646BEA /* Preview Assets.xcassets in Resources */,
 				8B676F7A2B21DFD500646BEA /* Assets.xcassets in Resources */,
-				7AB9270F2B285111001CCB97 /* Thunder.mp3 in Resources */,
 				8B676FA92B248DFF00646BEA /* JingleBeat.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

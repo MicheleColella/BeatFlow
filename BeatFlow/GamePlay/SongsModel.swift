@@ -18,7 +18,6 @@ struct SongValue{
     var cutDirections1: [CutDirection]
     var cutDirections2: [CutDirection]
     var cutDirections3: [CutDirection]
-    var startDelay: Double
 }
 
 class SongSelection{
@@ -29,8 +28,7 @@ class SongSelection{
                   columnSequence3: [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
                   cutDirections1: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up],
                   cutDirections2: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up],
-                  cutDirections3: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up],
-                  startDelay: 1.9
+                  cutDirections3: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up]
                  ),
         SongValue(name: "Thunder", songName: "Thunder", gameDuration: 180, bpm: 84.0,
                   columnSequence1: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -38,8 +36,7 @@ class SongSelection{
                   columnSequence3: [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   cutDirections1: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left],
                   cutDirections2: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left],
-                  cutDirections3: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left],
-                  startDelay: 1.0
+                  cutDirections3: [.right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left, .down, .left, .right, .right, .right, .left, .right, .up, .up, .down, .up, .right, .left]
                  )
     ]
 }

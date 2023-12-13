@@ -1,13 +1,22 @@
 import SwiftUI
 
 struct EndGameView: View {
+    @Binding var score: Int
+    @Binding var highestCombo: Int
 
     var body: some View {
-        Text("Esci")
+        NavigationView() {
+            VStack{
+                Text("Score: \(score) MaxCombo: \(highestCombo)")
+                NavigationLink(destination: SongList()) {
+                    Text("Esci")
+                }
+            }
+        }
     }
     
 }
 
 #Preview {
-    EndGameView()
+    EndGameView(score: .constant(0), highestCombo: .constant(0))
 }
