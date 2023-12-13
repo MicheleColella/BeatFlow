@@ -47,7 +47,8 @@ class GameScene: SKScene {
     var startDelay: Double?
     
     ///Regolazione delle note
-    let distanceBetweenNotes: CGFloat = 18 // Distanza orizzontale tra le note
+    let xOffsetPos: CGFloat = 20
+    let distanceBetweenNotes: CGFloat = 40 // Distanza orizzontale tra le note
     let noteWidth: CGFloat = 90 // Larghezza delle note
     let noteHeight: CGFloat = 129 // Altezza delle note
     let verticalDistanceBetweenNotes: CGFloat = 250 // Distanza verticale tra le note
@@ -71,6 +72,8 @@ class GameScene: SKScene {
     
     ///Avvio della scena
     override func didMove(to view: SKView) {
+        drawHorizontalLines()
+        
         // Calcola l'altezza totale del rettangolo in base a heightA e heightB
         let totalHeight = heightB - heightA
 
@@ -239,6 +242,47 @@ class GameScene: SKScene {
         
         updateProgressBar()
     }
+    
+    func drawHorizontalLines() {
+        let widthA: CGFloat = 260
+        let widthB: CGFloat = 130
+        
+            let lineA = SKShapeNode()
+            let lineB = SKShapeNode()
+            
+            let pathA = CGMutablePath()
+            let pathB = CGMutablePath()
+            
+            let startY: CGFloat = -1000
+            let endY: CGFloat = 1000
+            
+            // Crea i punti di inizio e fine per le due linee
+            let startPointA = CGPoint(x: widthA, y: startY)
+            let endPointA = CGPoint(x: widthA, y: endY)
+            
+            let startPointB = CGPoint(x: widthB, y: startY)
+            let endPointB = CGPoint(x: widthB, y: endY)
+            
+            // Crea il percorso delle due linee
+            pathA.move(to: startPointA)
+            pathA.addLine(to: endPointA)
+            
+            pathB.move(to: startPointB)
+            pathB.addLine(to: endPointB)
+            
+            // Imposta le proprietà delle linee
+            lineA.path = pathA
+            lineA.strokeColor = .black // Modifica il colore
+            lineA.lineWidth = 2 // Modifica lo spessore
+            
+            lineB.path = pathB
+            lineB.strokeColor = .black // Modifica il colore
+            lineB.lineWidth = 2 // Modifica lo spessore
+            
+            // Aggiungi le linee alla scena
+            addChild(lineA)
+            addChild(lineB)
+        }
 
     
     ///Creazione delle note
@@ -252,7 +296,7 @@ class GameScene: SKScene {
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
                 let yOffset = size.height / 4 + CGFloat(i) * verticalDistanceBetweenNotes + yOffsetOffset // Altezza basata sull'indice
-                let xPosition = 0 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + 45
+                let xPosition = 0 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + xOffsetPos
                 note.position = CGPoint(x: xPosition, y: yOffset)
                 note.name = "Note"
                 note.cutDirection = cutDirections1?[i] ?? .any // Associa la direzione di taglio alla nota
@@ -272,7 +316,7 @@ class GameScene: SKScene {
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
                 let yOffset = size.height / 4 + CGFloat(i) * verticalDistanceBetweenNotes + yOffsetOffset // Altezza basata sull'indice
-                let xPosition = 1 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + 45
+                let xPosition = 1 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + xOffsetPos
                 note.position = CGPoint(x: xPosition, y: yOffset)
                 note.name = "Note"
                 note.cutDirection = cutDirections2?[i] ?? .any // Associa la direzione di taglio alla nota
@@ -292,7 +336,7 @@ class GameScene: SKScene {
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
                 let yOffset = size.height / 4 + CGFloat(i) * verticalDistanceBetweenNotes + yOffsetOffset // Altezza basata sull'indice
-                let xPosition = 2 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + 45
+                let xPosition = 2 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + xOffsetPos
                 note.position = CGPoint(x: xPosition, y: yOffset)
                 note.name = "Note"
                 note.cutDirection = cutDirections3?[i] ?? .any // Associa la direzione di taglio alla nota
@@ -387,6 +431,14 @@ class GameScene: SKScene {
                                 {
                                     gameManager?.actualHealth += 1
                                 }
+                                
+                                // Attiva l'effetto di pulsazione del testo
+                                gameManager?.isPulsating = true
+
+                                    // Disattiva l'effetto di pulsazione dopo un certo periodo di tempo
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                        self.gameManager?.isPulsating = false
+                                    }
 
                             } else {
                                 // Resettare la combo se si sbaglia la nota
