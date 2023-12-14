@@ -19,6 +19,7 @@ struct SongList: View {
             startPoint: UnitPoint(x: 0.5, y: 0),
             endPoint: UnitPoint(x: 0.5, y: 1)
             ).overlay(
+                /// 1a canzone
                 VStack{
                     VStack(alignment: .leading, spacing: 10) {
                         Text("SONG SELECTION")
@@ -37,6 +38,7 @@ struct SongList: View {
                                     .foregroundColor(.purple)
                                     .frame(height: 120)
                                     .overlay(
+                                        /// canzone 1
                                         VStack(alignment: .leading){
                                             VStack{Text("THUNDER")
                                                     .foregroundColor(.white)
@@ -84,7 +86,18 @@ struct SongList: View {
                                                       )
                                                       .cornerRadius(19)
                                                       .offset(x: 26, y: -24)
+                                                    HStack {
+                                                        Image(systemName: "timer")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 13))
+                                                        Text("3:36")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 12))
+                                                            
+                                                    }.offset(x:-70 , y:-60)
                                                     Image(systemName:"play.circle")
+                                                        .font(.system(size: 64))
+                                                        .foregroundColor(.white)
                                                         .offset(x: 26, y: -24)
                                                 }
                                               
@@ -106,10 +119,77 @@ struct SongList: View {
                                     .foregroundColor(.purple)
                                     .frame(height: 120)
                                     .overlay(
-                                        Text("canzone 2")
-                                            .foregroundColor(.white)
-                                            .padding()
-                                    )
+                                        /// 2a canzone
+                                            VStack(alignment: .leading){
+                                                VStack{Text("MAMMAMIA")
+                                                        .foregroundColor(.white)
+                                                    
+                                                        .font(Font.custom("SF Compact Rounded", size: 24))
+                                                    Text("Maneskin")
+                                                        .foregroundColor(.white)
+                                                        .offset(x: -39)
+                                                    .font(Font.custom("SF Compact Rounded", size: 13))}.offset(y:40)
+                                                
+                                                
+
+                                                HStack(alignment: .center) {
+                                                    HStack{
+                                                        Image(systemName: "speaker.wave.2.circle")
+                                                            .font(.system(size: 30))
+                                                            .foregroundColor(.white)
+                                                        Image(systemName: "chart.bar.fill")
+                                                            .font(.system(size: 20))
+                                                            .foregroundColor(.white)
+                                                    }.offset(y: 10)
+                                                    HStack{
+                                                        Text("142 BPM")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 13))
+                                                        Image(systemName: "music.note")
+                                                            .foregroundColor(.white)
+                                                        Text("200")
+                                                            .foregroundColor(.white)
+                                                            .font(.system(size: 13))
+                                                        
+                                                    }.offset(x: 25, y: 10)
+                                                    ZStack{
+                                                        
+                                                        Rectangle()
+                                                          .foregroundColor(.clear)
+                                                          .frame(width: 122, height: 122)
+                                                          .background(
+                                                            Image("ImageMammamia")
+                                                              .resizable()
+                                                              .aspectRatio(contentMode: .fill)
+                                                              .frame(width: 122, height: 122)
+                                                              .clipped()
+                                                              .opacity(0.7)
+                                                          )
+                                                          .cornerRadius(19)
+                                                          .offset(x: 26, y: -24)
+                                                        HStack {
+                                                            Image(systemName: "timer")
+                                                                .foregroundColor(.white)
+                                                                .font(.system(size: 13))
+                                                            Text("3:18")
+                                                                .foregroundColor(.white)
+                                                                .font(.system(size: 12))
+                                                                
+                                                        }.offset(x:-70 , y:-60)
+                                                        Image(systemName:"play.circle")
+                                                            .font(.system(size: 64))
+                                                            .foregroundColor(.white)
+                                                            .offset(x: 26, y: -24)
+                                                    }
+                                                  
+                                                    
+                                                }
+        
+                                                    
+                                            }.padding()
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        )
+                                    
                                     .cornerRadius(30)
                                     .padding(.horizontal)
                             }
@@ -117,10 +197,78 @@ struct SongList: View {
                                     .foregroundColor(.purple)
                                     .frame(height: 120)
                                     .overlay(
-                                        Text("canzone 3")
-                                            .foregroundColor(.white)
-                                            .padding()
-                                    )
+                                        /// 3a canzone
+                                        VStack(alignment: .leading){
+                                        VStack{Text("DOMINION")
+                                                .foregroundColor(.white)
+                                            
+                                                .font(Font.custom("SF Compact Rounded", size: 24))
+                                            Text("Skillet")
+                                                .foregroundColor(.white)
+                                                .offset(x: -43)
+                                            .font(Font.custom("SF Compact Rounded", size: 13))}.offset(y:40)
+                                        
+                                        
+
+                                        HStack(alignment: .center) {
+                                            HStack{
+                                                Image(systemName: "speaker.wave.2.circle")
+                                                    .font(.system(size: 30))
+                                                    .foregroundColor(.white)
+                                                Image(systemName: "chart.bar.fill")
+                                                    .font(.system(size: 20))
+                                                    .foregroundColor(.white)
+                                            }.offset(y: 10)
+                                            HStack{
+                                                Text("165 BPM")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 13))
+                                                Image(systemName: "music.note")
+                                                    .foregroundColor(.white)
+                                                Text("200")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 13))
+                                                
+                                            }.offset(x: 25, y: 10)
+                                            ZStack{
+                                                
+                                                Rectangle()
+                                                  .foregroundColor(.clear)
+                                                  .frame(width: 122, height: 122)
+                                                  .background(
+                                                    Image("ImageDominion")
+                                                      .resizable()
+                                                      .aspectRatio(contentMode: .fill)
+                                                      .frame(width: 122, height: 122)
+                                                      .clipped()
+                                                      .opacity(0.7)
+                                                  )
+                                                  .cornerRadius(19)
+                                                  .offset(x: 26, y: -24)
+                                                HStack {
+                                                    Image(systemName: "timer")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 13))
+                                                    Text("3:52")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 12))
+                                                        
+                                                }.offset(x:-70 , y:-60)
+                                                Image(systemName:"play.circle")
+                                                    .font(.system(size: 64))
+                                                    .foregroundColor(.white)
+                                                    .offset(x: 26, y: -24)
+                                            }
+                                          
+                                            
+                                        }
+
+                                            
+                                    }.padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                )
+                                       
+                                    
                                     .cornerRadius(30)
                                     .padding(.horizontal)
                             }
@@ -128,10 +276,75 @@ struct SongList: View {
                                     .foregroundColor(.purple)
                                     .frame(height: 120)
                                     .overlay(
-                                        Text("canzone 4")
-                                            .foregroundColor(.white)
-                                            .padding()
-                                    )
+                                        /// canzone 4
+                                        VStack(alignment: .leading){
+                                        VStack{Text("ANIMALS")
+                                                .foregroundColor(.white)
+                                            
+                                                .font(Font.custom("SF Compact Rounded", size: 24))
+                                            Text("Maroon 5")
+                                                .foregroundColor(.white)
+                                                .offset(x: -25)
+                                            .font(Font.custom("SF Compact Rounded", size: 13))}.offset(y:40)
+                                        
+                                        
+
+                                        HStack(alignment: .center) {
+                                            HStack{
+                                                Image(systemName: "speaker.wave.2.circle")
+                                                    .font(.system(size: 30))
+                                                    .foregroundColor(.white)
+                                                Image(systemName: "chart.bar.fill")
+                                                    .font(.system(size: 20))
+                                                    .foregroundColor(.white)
+                                            }.offset(y: 10)
+                                            HStack{
+                                                Text("190 BPM")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 13))
+                                                Image(systemName: "music.note")
+                                                    .foregroundColor(.white)
+                                                Text("200")
+                                                    .foregroundColor(.white)
+                                                    .font(.system(size: 13))
+                                                
+                                            }.offset(x: 25, y: 10)
+                                            ZStack{
+                                                
+                                                Rectangle()
+                                                  .foregroundColor(.clear)
+                                                  .frame(width: 122, height: 122)
+                                                  .background(
+                                                    Image("ImageAnimals")
+                                                      .resizable()
+                                                      .aspectRatio(contentMode: .fill)
+                                                      .frame(width: 122, height: 122)
+                                                      .clipped()
+                                                      .opacity(0.7)
+                                                  )
+                                                  .cornerRadius(19)
+                                                  .offset(x: 26, y: -24)
+                                                HStack {
+                                                    Image(systemName: "timer")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 13))
+                                                    Text("4:41")
+                                                        .foregroundColor(.white)
+                                                        .font(.system(size: 12))
+                                                        
+                                                }.offset(x:-70 , y:-60)
+                                                Image(systemName:"play.circle")
+                                                    .font(.system(size: 64))
+                                                    .foregroundColor(.white)
+                                                    .offset(x: 26, y: -24)
+                                            }
+                                          
+                                            
+                                        }
+
+                                            
+                                    }.padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)                           )
                                     .cornerRadius(30)
                                     .padding(.horizontal)
                             }
