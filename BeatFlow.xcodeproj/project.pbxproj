@@ -22,6 +22,7 @@
 		8B676FA52B236B5B00646BEA /* StartButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B676FA42B236B5B00646BEA /* StartButtonView.swift */; };
 		8B676FA72B248C3A00646BEA /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B676FA62B248C3A00646BEA /* AudioManager.swift */; };
 		8B676FA92B248DFF00646BEA /* JingleBeat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B676FA82B248DFF00646BEA /* JingleBeat.mp3 */; };
+		F352974F2B2A1FA5009B6A5E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352974E2B2A1FA5009B6A5E /* SettingsView.swift */; };
 		F36846612B2879C100D51DAB /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36846602B2879C100D51DAB /* LeaderboardView.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		8B676FA42B236B5B00646BEA /* StartButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonView.swift; sourceTree = "<group>"; };
 		8B676FA62B248C3A00646BEA /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		8B676FA82B248DFF00646BEA /* JingleBeat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = JingleBeat.mp3; sourceTree = "<group>"; };
+		F352974E2B2A1FA5009B6A5E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F36846602B2879C100D51DAB /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +102,7 @@
 		8B676F692B21DFD300646BEA = {
 			isa = PBXGroup;
 			children = (
+				F35297502B2A210C009B6A5E /* Settings */,
 				8B676F742B21DFD300646BEA /* BeatFlow */,
 				8B676F852B21DFD500646BEA /* BeatFlowTests */,
 				8B676F8F2B21DFD500646BEA /* BeatFlowUITests */,
@@ -176,6 +179,14 @@
 				8B676FA82B248DFF00646BEA /* JingleBeat.mp3 */,
 			);
 			path = Songs;
+			sourceTree = "<group>";
+		};
+		F35297502B2A210C009B6A5E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F352974E2B2A1FA5009B6A5E /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		F36846622B2879CC00D51DAB /* Leaderboard */ = {
@@ -327,6 +338,7 @@
 				8B676FA52B236B5B00646BEA /* StartButtonView.swift in Sources */,
 				8B676F762B21DFD300646BEA /* BeatFlowApp.swift in Sources */,
 				8B221AC62B2630F400CB9402 /* SongsModel.swift in Sources */,
+				F352974F2B2A1FA5009B6A5E /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
