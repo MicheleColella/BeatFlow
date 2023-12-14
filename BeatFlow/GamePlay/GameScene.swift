@@ -47,7 +47,8 @@ class GameScene: SKScene {
     var startDelay: Double?
     
     ///Regolazione delle note
-    let distanceBetweenNotes: CGFloat = 18 // Distanza orizzontale tra le note
+    let xOffsetPos: CGFloat = 20
+    let distanceBetweenNotes: CGFloat = 40 // Distanza orizzontale tra le note
     let noteWidth: CGFloat = 90 // Larghezza delle note
     let noteHeight: CGFloat = 129 // Altezza delle note
     let verticalDistanceBetweenNotes: CGFloat = 250 // Distanza verticale tra le note
@@ -64,21 +65,52 @@ class GameScene: SKScene {
     let baseScoreForHit: Int = 2
     
     ///Sistema di vita
-    var startLife = 2
+    var startLife = 10
     
     var contStartMusic: Int = 0
 
     
     ///Avvio della scena
     override func didMove(to view: SKView) {
-        gameManager?.actualHealth = startLife
-        createNotes()
         drawHorizontalLines()
         
+        // Calcola l'altezza totale del rettangolo in base a heightA e heightB
+        let totalHeight = heightB - heightA
+
+        // Calcola l'altezza del rettangolo utilizzando totalHeight
+        let rectangleHeight = totalHeight // Puoi anche regolare questa altezza se necessario
+
+        // Crea il rettangolo
+        let rectangle = SKShapeNode(rectOf: CGSize(width: 394, height: rectangleHeight))
+        rectangle.fillColor = .clear
+        rectangle.strokeColor = .clear
+
+        // Calcola la posizione Y del centro del rettangolo
+        let centerY = (heightA + heightB) / 2
+
+        // Imposta la posizione del rettangolo in base al centro Y
+        rectangle.position = CGPoint(x: self.size.width / 2, y: centerY)
+
+        // Crea il nodo sfocatura per il rettangolo
+        let blur = SKSpriteNode(color: .white, size: CGSize(width: 394, height: rectangleHeight))
+        blur.alpha = 0.17
+        blur.position = CGPoint(x: rectangle.frame.width / 2, y: centerY)
+        blur.addChild(rectangle)
+
+        // Aggiungi il rettangolo alla scena
+        addChild(blur)
+
+
+        
+        gameManager?.actualHealth = startLife
+        createNotes()
         
         let background = SKSpriteNode(imageNamed: "back") // Sostituisci "NomeImmagineConGradiente" con il nome effettivo del tuo file di immagine
                 background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
                 background.zPosition = -1 // Assicurati che lo sfondo sia dietro gli altri nodi
+        let scaleFactor: CGFloat = 1.1 // Incremento leggero della scala, puoi regolare questo valore come desideri
+        background.setScale(scaleFactor) // Imposta la scala del background
+
                 addChild(background)
          
         progressBar = createProgressBar()
@@ -86,8 +118,8 @@ class GameScene: SKScene {
     }
     
     func createProgressBar() -> SKShapeNode {
-        let progressBarWidth: CGFloat = 300 // Larghezza della barra di avanzamento
-        let progressBarHeight: CGFloat = 20 // Altezza della barra di avanzamento
+        let progressBarWidth: CGFloat = 400 // Larghezza della barra di avanzamento
+        let progressBarHeight: CGFloat = 38 // Altezza della barra di avanzamento
         
         // Calcola la posizione X desiderata per spostare la barra più a destra nella scena
         let progressBarXPosition = self.size.width - 20 - progressBarWidth / 2
@@ -96,14 +128,12 @@ class GameScene: SKScene {
         progressBar.fillColor = .clear // Imposta il colore di riempimento a trasparente
         progressBar.strokeColor = .clear // Colore del bordo della barra
         progressBar.lineWidth = 2 // Spessore del bordo
-        progressBar.position = CGPoint(x: progressBarXPosition-200, y: 700) // Posiziona la barra sulla scena
+        progressBar.position = CGPoint(x: progressBarXPosition-170, y: 716) // Posiziona la barra sulla scena
         
         return progressBar
     }
 
 
-
-        
         // Aggiorna la barra di avanzamento in base al tempo rimanente
     func updateProgressBar() {
         guard let gameTimer = gameTimer, let gameDuration = gameDuration else {
@@ -114,9 +144,9 @@ class GameScene: SKScene {
         let progress = CGFloat(1 - (timeRemaining / gameDuration)) // Calcola il progresso come percentuale completata
 
         if let progressBar = progressBar {
-            let progressBarWidth: CGFloat = 300 // Larghezza della barra di avanzamento
+            let progressBarWidth: CGFloat = 343 // Larghezza della barra di avanzamento
 
-            let progressBarHeight: CGFloat = 20 // Altezza della barra di avanzamento
+            let progressBarHeight: CGFloat = 38 // Altezza della barra di avanzamento
             
             // Calcola la posizione X desiderata per spostare la barra più a sinistra nella scena
             let progressBarXPosition = 20 + progressBarWidth / 2
@@ -125,13 +155,13 @@ class GameScene: SKScene {
                 progressBarLeft.removeFromParent()
             }
 
-            let red = CGFloat((0x2F >> 16) & 0xFF) / 255.0
-            let green = CGFloat((0xA3 >> 8) & 0xFF) / 255.0
-            let blue = CGFloat(0xC4 & 0xFF) / 255.0
+            let red = CGFloat((0x2F & 0xFF)) / 255.0
+            let green = CGFloat((0xA3 & 0xFF)) / 255.0
+            let blue = CGFloat((0xC4 & 0xFF)) / 255.0
 
             let customColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
 
-            let progressBarLeft = SKShapeNode(rectOf: CGSize(width: progressBarWidth * progress, height: progressBarHeight))
+            let progressBarLeft = SKShapeNode(rectOf: CGSize(width: progressBarWidth * progress, height: progressBarHeight), cornerRadius: 10)
             progressBarLeft.fillColor = customColor // Colore di riempimento della parte sinistra della barra
             progressBarLeft.strokeColor = .clear // Nessun contorno
             progressBarLeft.position = CGPoint(x: progressBarXPosition - progressBarWidth / 2 + progressBarWidth * progress / 2, y: 50)
@@ -152,6 +182,7 @@ class GameScene: SKScene {
     
     ///Quando il timer finisce avvia la funzione all'interno
     @objc func endGame() {
+        AudioManager.shared.stopBackgroundMusic()
         showEndGameScreen()
     }
     
@@ -211,46 +242,48 @@ class GameScene: SKScene {
         
         updateProgressBar()
     }
-
     
-    ///Disegna le linee orizzontali
     func drawHorizontalLines() {
-        let lineA = SKShapeNode()
-        let lineB = SKShapeNode()
+        let widthA: CGFloat = 260
+        let widthB: CGFloat = 130
         
-        let pathA = CGMutablePath()
-        let pathB = CGMutablePath()
-        
-        let startX: CGFloat = -500
-        let endX: CGFloat = 500
-        
-        // Crea i punti di inizio e fine per le due linee
-        let startPointA = CGPoint(x: startX, y: heightA)
-        let endPointA = CGPoint(x: endX, y: heightA)
-        
-        let startPointB = CGPoint(x: startX, y: heightB)
-        let endPointB = CGPoint(x: endX, y: heightB)
-        
-        // Crea il percorso delle due linee
-        pathA.move(to: startPointA)
-        pathA.addLine(to: endPointA)
-        
-        pathB.move(to: startPointB)
-        pathB.addLine(to: endPointB)
-        
-        // Imposta le proprietà delle linee
-        lineA.path = pathA
-        lineA.strokeColor = .red // Modifica il colore
-        lineA.lineWidth = 2 // Modifica lo spessore
-        
-        lineB.path = pathB
-        lineB.strokeColor = .red // Modifica il colore
-        lineB.lineWidth = 2 // Modifica lo spessore
-        
-        // Aggiungi le linee alla scena
-        addChild(lineA)
-        addChild(lineB)
-    }
+            let lineA = SKShapeNode()
+            let lineB = SKShapeNode()
+            
+            let pathA = CGMutablePath()
+            let pathB = CGMutablePath()
+            
+            let startY: CGFloat = -1000
+            let endY: CGFloat = 1000
+            
+            // Crea i punti di inizio e fine per le due linee
+            let startPointA = CGPoint(x: widthA, y: startY)
+            let endPointA = CGPoint(x: widthA, y: endY)
+            
+            let startPointB = CGPoint(x: widthB, y: startY)
+            let endPointB = CGPoint(x: widthB, y: endY)
+            
+            // Crea il percorso delle due linee
+            pathA.move(to: startPointA)
+            pathA.addLine(to: endPointA)
+            
+            pathB.move(to: startPointB)
+            pathB.addLine(to: endPointB)
+            
+            // Imposta le proprietà delle linee
+            lineA.path = pathA
+            lineA.strokeColor = .black // Modifica il colore
+            lineA.lineWidth = 2 // Modifica lo spessore
+            
+            lineB.path = pathB
+            lineB.strokeColor = .black // Modifica il colore
+            lineB.lineWidth = 2 // Modifica lo spessore
+            
+            // Aggiungi le linee alla scena
+            addChild(lineA)
+            addChild(lineB)
+        }
+
     
     ///Creazione delle note
     func createNotes() {
@@ -263,7 +296,7 @@ class GameScene: SKScene {
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
                 let yOffset = size.height / 4 + CGFloat(i) * verticalDistanceBetweenNotes + yOffsetOffset // Altezza basata sull'indice
-                let xPosition = 0 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + 45
+                let xPosition = 0 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + xOffsetPos
                 note.position = CGPoint(x: xPosition, y: yOffset)
                 note.name = "Note"
                 note.cutDirection = cutDirections1?[i] ?? .any // Associa la direzione di taglio alla nota
@@ -283,7 +316,7 @@ class GameScene: SKScene {
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
                 let yOffset = size.height / 4 + CGFloat(i) * verticalDistanceBetweenNotes + yOffsetOffset // Altezza basata sull'indice
-                let xPosition = 1 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + 45
+                let xPosition = 1 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + xOffsetPos
                 note.position = CGPoint(x: xPosition, y: yOffset)
                 note.name = "Note"
                 note.cutDirection = cutDirections2?[i] ?? .any // Associa la direzione di taglio alla nota
@@ -303,7 +336,7 @@ class GameScene: SKScene {
             if column != 0 {
                 let note = Note(color: .white, size: CGSize(width: noteWidth, height: noteHeight))
                 let yOffset = size.height / 4 + CGFloat(i) * verticalDistanceBetweenNotes + yOffsetOffset // Altezza basata sull'indice
-                let xPosition = 2 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + 45
+                let xPosition = 2 * (noteWidth + distanceBetweenNotes) + noteWidth / 2 + xOffsetPos
                 note.position = CGPoint(x: xPosition, y: yOffset)
                 note.name = "Note"
                 note.cutDirection = cutDirections3?[i] ?? .any // Associa la direzione di taglio alla nota
@@ -398,6 +431,14 @@ class GameScene: SKScene {
                                 {
                                     gameManager?.actualHealth += 1
                                 }
+                                
+                                // Attiva l'effetto di pulsazione del testo
+                                gameManager?.isPulsating = true
+
+                                    // Disattiva l'effetto di pulsazione dopo un certo periodo di tempo
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                                        self.gameManager?.isPulsating = false
+                                    }
 
                             } else {
                                 // Resettare la combo se si sbaglia la nota

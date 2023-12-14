@@ -23,7 +23,7 @@ class AudioManager {
                 
                 // Riproduci l'audio sul thread principale
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    self.audioPlayer?.numberOfLoops = -1
+                    self.audioPlayer?.numberOfLoops = 0
                     self.audioPlayer?.play()
                 }
             } catch {

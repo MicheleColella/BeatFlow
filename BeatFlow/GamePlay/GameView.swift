@@ -7,6 +7,7 @@ class GameManager: ObservableObject {
     @Published var actualCombo: Int = 0
     @Published var highestCombo: Int = 0
     @Published var actualHealth: Int = 0
+    @Published var isPulsating: Bool = false
 }
 
 struct GameView: View {
@@ -58,14 +59,47 @@ struct GameView: View {
                             .statusBar(hidden: true)
                             .ignoresSafeArea()
                             .environmentObject(gameManager)
-                        Text("\(gameManager.score)") // Visualizza lo score
-                            .foregroundColor(.white)
-                            .font(.largeTitle)
-                            .offset(x: -150, y: -350)
-                        Text("×\(gameManager.actualCombo)")
-                            .foregroundColor(.white)
-                            .font(.largeTitle)
-                            .offset(x: 150, y: -350)
+                        Rectangle()
+                          .foregroundColor(.clear)
+                          .frame(width: 350, height: 38)
+                          .background(
+                            LinearGradient(
+                              stops: [
+                                Gradient.Stop(color: Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0.3), location: 0.00),
+                                Gradient.Stop(color: Color(red: 0.85, green: 0.85, blue: 0.85).opacity(0), location: 1.00),
+                              ],
+                              startPoint: UnitPoint(x: 0.5, y: 0),
+                              endPoint: UnitPoint(x: 0.5, y: 1)
+                            )
+                          )
+                          .cornerRadius(10)
+                          .shadow(color: .black.opacity(0.25), radius: 2, x: 0, y: 2).offset(y:-351)
+                        if gameManager.score != 0{
+                            ZStack{
+                                Text("\(gameManager.score)")
+                                    .font(Font.custom("SF Compact", size: 48).weight(.bold))
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(gameManager.isPulsating ? .blue : .white.opacity(0.81))
+                                    .frame(width: 834, height: 103, alignment: .top)
+                                    .scaleEffect(gameManager.isPulsating ? 1.2 : 1.0) // Puoi aggiungere la scala pulsante qui
+                                    .animation(.easeInOut(duration: 0.1)) // Aggiungi l'animazione per l'effetto pulsante
+                            }.offset(x: 0, y: -250)
+                        }
+                        if gameManager.actualCombo != 0{
+                            ZStack{
+                                Text("×\(gameManager.actualCombo)")
+                                    .font(
+                                        Font.custom("SF Compact", size: 36)
+                                            .weight(.medium)
+                                    )
+                                    .kerning(4.32)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(.white.opacity(0.85))
+                                    .frame(width: 158, height: 43, alignment: .top)
+                                    .scaleEffect(gameManager.isPulsating ? 1.2 : 1.0) // Puoi aggiungere la scala pulsante qui
+                                    .animation(.easeInOut(duration: 0.2))
+                            }.offset(x: 0, y: -230)
+                        }
                     }
                 }
                 
