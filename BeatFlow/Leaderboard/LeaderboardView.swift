@@ -9,17 +9,18 @@ import SwiftUI
 
 struct LeaderboardView: View {
     var body: some View {
-        let number = [1, 2, 3, 4, 5, 6, 7, 8]
+
         
         LinearGradient(
-            stops: [
-                Gradient.Stop(color: Color(red: 0.33, green: 0.16, blue: 0.53), location: 0.00),
-                Gradient.Stop(color: Color(red: 0.7, green: 0.22, blue: 0.93).opacity(0.88), location: 0.50),
-                Gradient.Stop(color: Color(red: 0.02, green: 0.57, blue: 0.73).opacity(0.54), location: 1.00),
-            ],
-            startPoint: UnitPoint(x: 0.5, y: 0),
-            endPoint: UnitPoint(x: 0.5, y: 1)
-        )   
+        stops: [
+        Gradient.Stop(color: Color(red: 0.33, green: 0.16, blue: 0.53), location: 0.00),
+        Gradient.Stop(color: Color(red: 0.7, green: 0.22, blue: 0.93), location: 0.50),
+        Gradient.Stop(color: Color(red: 0.02, green: 0.57, blue: 0.73).opacity(0.54), location: 1.00),
+        Gradient.Stop(color: Color(red: 0.02, green: 0.57, blue: 0.73), location: 1.00),
+        ],
+        startPoint: UnitPoint(x: 0.5, y: 0),
+        endPoint: UnitPoint(x: 0.5, y: 1)
+        )
         .overlay(
             VStack {
                 Text("LEADERBOARD")

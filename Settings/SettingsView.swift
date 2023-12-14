@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @State private var toggleEnabled = true
+    
     var body: some View {
         
         LinearGradient(
-            stops: [
-                Gradient.Stop(color: Color(red: 0.33, green: 0.16, blue: 0.53), location: 0.00),
-                Gradient.Stop(color: Color(red: 0.7, green: 0.22, blue: 0.93).opacity(0.88), location: 0.50),
-                Gradient.Stop(color: Color(red: 0.02, green: 0.57, blue: 0.73).opacity(0.54), location: 1.00),
-            ],
-            startPoint: UnitPoint(x: 0.5, y: 0),
-            endPoint: UnitPoint(x: 0.5, y: 1)
+        stops: [
+        Gradient.Stop(color: Color(red: 0.33, green: 0.16, blue: 0.53), location: 0.00),
+        Gradient.Stop(color: Color(red: 0.7, green: 0.22, blue: 0.93), location: 0.50),
+        Gradient.Stop(color: Color(red: 0.02, green: 0.57, blue: 0.73).opacity(0.54), location: 1.00),
+        Gradient.Stop(color: Color(red: 0.02, green: 0.57, blue: 0.73), location: 1.00),
+        ],
+        startPoint: UnitPoint(x: 0.5, y: 0),
+        endPoint: UnitPoint(x: 0.5, y: 1)
         )
         .overlay(
             VStack {
@@ -49,11 +53,13 @@ struct SettingsView: View {
                                 
                             Text("Vibration").foregroundColor(.white).font(.title2)
                             
-                            Spacer()
-                                .frame(width: 185)
+                            
+                            
+                           
 
                             
-                            //toggle
+                            Toggle("", isOn: $toggleEnabled)
+
                         }
                         
                     
