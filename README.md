@@ -1,6 +1,6 @@
 # BeatFlow
 
-![Logo](path/to/Unknown-3-300x300.png)
+![Logo](Unknown-3-300x300.png)
 
 **BeatFlow** is a dynamic music game built in Swift using the powerful SpriteKit library. Fusing elements inspired by hits like Piano Tiles and Beat Saber, BeatFlow invites players to immerse themselves in a rhythmic adventure where the main task is to cut musical notes that flow across the screen to the beat of the music. Each note must be cut in the right direction, testing the player's precision and reflexes.
 
